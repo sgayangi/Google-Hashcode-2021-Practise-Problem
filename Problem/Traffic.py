@@ -52,3 +52,17 @@ for out in output:
     print(len(out)-1)
     for line in out[1:]:
         print(*line)
+
+outfile = open('output.txt', 'w')
+
+outfile.write(str(len(output)))
+outfile.write('\n')
+for out in output:
+    outfile.write(str(out[0]))
+    outfile.write('\n')
+    outfile.write(str(len(out)-1))
+    outfile.write('\n')
+    for line in out[1:]:
+        outfile.write(line[0] + ' ' + str(line[1]))
+        outfile.write('\n')
+        outfile.close()
