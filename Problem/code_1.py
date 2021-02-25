@@ -1,4 +1,4 @@
-input_file = "b"
+input_file = "a"
 # a
 # b
 # c
@@ -20,49 +20,37 @@ for i in range(Intersections_No):
     intersections[i] = dict()
     intersections[i]["Incoming Streets"] = []
     intersections[i]["Outgoing Streets"] = []
+
 streets_and_intersections=[]
 streets = []
 street_names=[]
 for i in range(Streets_No):
     B, E, street_name, time = f.readline().split(" ")
-    streets.append([street_name, time])
+    streets.append([street_name, int(time)])
     street_names.append(street_name)
     streets_and_intersections.append([B,E])
     intersections[int(B)]["Incoming Streets"].append(i)
     intersections[int(E)]["Outgoing Streets"].append(i)
 
 cars = []
+cars_and_costs =[]
 streets_travelled_on = set()
 intersections_that_need_to_be_green =set()
 for j in range(Cars_No):
-    cars.append([])
     x = f.readline().strip().split(" ")
     x.pop(0)
+    cars.append([])
+    cost = 0
     for i in range(len(x)):
         s_no = street_names.index(x[i])
-        cars[j].append(s_no)
+        cars[j].append(street_names[s_no])
         intersections_that_need_to_be_green.add(int(streets_and_intersections[s_no][1]))
         streets_travelled_on.add(s_no)
+        cost+=(streets[s_no][1])
+    cars_and_costs.append(cost)
 
-# print(streets_travelled_on)
-# print(cars)
-# print(intersections_that_need_to_be_green)
-# print(len(intersections_that_need_to_be_green))
-time = int(Duration // len(intersections_that_need_to_be_green))
-# print(time)
-intersections_that_need_to_be_green = list(intersections_that_need_to_be_green)
-print(len(intersections_that_need_to_be_green))
-
-for i in range(len(intersections_that_need_to_be_green)):
-    intersection = intersections_that_need_to_be_green[i]
-    print(intersection)
-    incoming = intersections[intersection]["Incoming Streets"]
-    print(len(incoming))
-    for road in incoming:
-        if road in streets_travelled_on:
-            print(street_names[road], end=" ")
-            print(time)
-    print()
+print(cars)
+print(cars_and_costs)
 
 output_file = open(r"d:\Programming\Google Hashcode\Problem\Outputs\\" +input_file+".txt", "w")
 
